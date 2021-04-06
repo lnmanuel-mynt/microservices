@@ -13,8 +13,8 @@ public class App {
     }
 
     @RestController
-    @RequestMapping("account")
-    public static class AccountController {
+    @RequestMapping("activity")
+    public static class ActivityController {
 
         @PostMapping
         public ResponseEntity create(@RequestBody Request request) {
