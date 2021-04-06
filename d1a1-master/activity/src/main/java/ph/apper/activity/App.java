@@ -12,7 +12,7 @@ public class App {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(App.class);
         application.addListeners(new ApplicationPidFileWriter());
-        application.run(args);;
+        application.run(args);
     }
 
     @RestController
