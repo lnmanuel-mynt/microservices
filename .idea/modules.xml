@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/d1a1-master/account-management/account-management.iml" filepath="$PROJECT_DIR$/d1a1-master/account-management/account-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/d1a1-master/activity/activity.iml" filepath="$PROJECT_DIR$/d1a1-master/activity/activity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/d1a1-master/d1a1.iml" filepath="$PROJECT_DIR$/d1a1-master/d1a1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/microservices-day1.iml" filepath="$PROJECT_DIR$/.idea/microservices-day1.iml" />
+    </modules>
+  </component>
+</project>
