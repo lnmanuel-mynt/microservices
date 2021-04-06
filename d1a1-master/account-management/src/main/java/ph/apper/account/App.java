@@ -1,25 +1,23 @@
 package ph.apper.account;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@ComponentScan
+@EnableConfigurationProperties({App.ActivityUrl.class})
 public class App {
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(App.class);
-        springApplication.addListeners(new ApplicationPidFileWriter());
-        springApplication.run(args);
-        // SpringApplication.run(App.class, args);
+        SpringApplication application = new SpringApplication(App.class);
+        application.addListeners(new ApplicationPidFileWriter());
+        application.run(args);
     }
 
     @Bean
@@ -27,17 +25,22 @@ public class App {
         return new RestTemplate();
     }
 
+    @Data
+    @ConfigurationProperties(prefix = "activity")
+    public static class ActivityUrl {
+        private String url;
+    }
+
     @RestController
     @RequestMapping("account")
     public static class AccountController {
 
-        @Autowired
-        private Environment env;
-
+        private final App.ActivityUrl url;
         private final RestTemplate restTemplate;
 
-        public AccountController(RestTemplate restTemplate) {
+        public AccountController(RestTemplate restTemplate, App.ActivityUrl activityUrl) {
             this.restTemplate = restTemplate;
+            this.url = activityUrl;
         }
 
         @PostMapping
@@ -47,7 +50,8 @@ public class App {
             Activity activity = new Activity();
             activity.setAction("REGISTRATION");
             activity.setIdentifier("email="+request.getEmail());
-            ResponseEntity<Object> response = restTemplate.postForEntity(env.getProperty("account.url"), activity, Object.class);
+            System.out.println(url.getUrl());
+            ResponseEntity<Object> response = restTemplate.postForEntity(url.getUrl(), activity, Object.class);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 System.out.println("Success");
